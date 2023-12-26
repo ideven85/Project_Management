@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,8 +61,13 @@ public class JwtTokenProvider {
     //Get user Id from token
 
     public Long getUserIdFromJWT(String token){
-        Claims claims = Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser()
+                .setSigningKey(SecurityConstants.SECRET)
+                .parseClaimsJws(token).getBody();
         String id = (String)claims.get("id");
+        for(var cl:claims.entrySet()){
+            System.out.println(cl.getKey()+":"+cl.getValue());
+        }
 
         return Long.parseLong(id);
     }

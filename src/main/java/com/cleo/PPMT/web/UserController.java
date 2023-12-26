@@ -49,17 +49,18 @@ public class UserController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
 
+        var cred = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
+                cred
         );
+        var credentials=authentication.getPrincipal();
+
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
+        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt,credentials.toString()));
     }
 
     @PostMapping("/register")

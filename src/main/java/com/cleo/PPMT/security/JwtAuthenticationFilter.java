@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
+
+
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -23,8 +27,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+//Badly built will work only for username/password based authentication
+
 
     @Override
+
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
 
@@ -34,12 +41,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if(StringUtils.hasText(jwt)&& tokenProvider.validateToken(jwt)){
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
+
                 User userDetails = customUserDetailsService.loadUserById(userId);
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
                         userDetails, null, Collections.emptyList());
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                authentication.setDetails(new WebAuthenticationDetailsSource()
+                        .buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             }
@@ -57,9 +67,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJWTFromRequest(HttpServletRequest request){
         String bearerToken = request.getHeader(SecurityConstants.HEADER_STRING);
-
+        System.out.println(bearerToken);
         if(StringUtils.hasText(bearerToken)&&bearerToken.startsWith(SecurityConstants.TOKEN_PREFIX)){
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
 
         return null;
