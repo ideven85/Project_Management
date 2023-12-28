@@ -23,7 +23,7 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(now.getTime()+ SecurityConstants.EXPIRATION_TIME);
 
         String userId = Long.toString(user.getId());
-
+        //claims contains id,username,fullName...
         Map<String,Object> claims = new HashMap<>();
         claims.put("id", (Long.toString(user.getId())));
         claims.put("username", user.getUsername());

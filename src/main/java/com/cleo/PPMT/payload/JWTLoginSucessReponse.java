@@ -1,22 +1,27 @@
 package com.cleo.PPMT.payload;
 
-import lombok.Getter;
+//import lombok.Getter;
 
 import java.util.Date;
 
+//import io.jsonwebtoken.lang.Arrays;
+import lombok.Getter;
+import lombok.Setter;
 @Getter
+@Setter
 public class JWTLoginSucessReponse {
     private boolean success;
     private String token;
     private final Date date;
-    private Object userName;
+    private String username;
+    private String password;
 
-    public JWTLoginSucessReponse(boolean success, String token,Object userName) {
+    public JWTLoginSucessReponse(boolean success, String token,String username,String password) {
         this.success = success;
         this.token = token;
         this.date=new Date(System.currentTimeMillis());
-        this.userName=userName;
-        System.out.println("Hello:"+userName);
+       this.username=username;
+       this.password=password;
     }
 
     public void setSuccess(boolean success) {

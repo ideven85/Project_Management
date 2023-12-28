@@ -7,7 +7,7 @@ import com.cleo.PPMT.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+//todo Store the credentials in kafka server
 @Service
 public class UserService {
 

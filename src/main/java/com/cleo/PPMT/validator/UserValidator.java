@@ -4,6 +4,7 @@ import com.cleo.PPMT.domain.User;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.util.StringUtils;
 
 @Component
 public class UserValidator implements Validator {
@@ -18,8 +19,13 @@ public class UserValidator implements Validator {
 
         User user = (User) object;
 
-        if(user.getPassword().length() <6){
-            errors.rejectValue("password","Length", "Password must be at least 6 characters");
+        if(user.getPassword().length() <8){//1
+            errors.rejectValue("password","Length", "Password must be at least 8 characters");
+        }else{
+            String p = user.getPassword();
+            if(p.matches("[0-9]")||p.toLowerCase().matches("[a-z]")){
+                errors.rejectValue("password", "AlphaNumeric","Password Should be alpha Numeric");
+            }
         }
 
         if(!user.getPassword().equals(user.getConfirmPassword())){
@@ -28,7 +34,7 @@ public class UserValidator implements Validator {
         }
 
         //confirmPassword
-
+        //todo 
 
 
     }

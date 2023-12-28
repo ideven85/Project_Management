@@ -1,0 +1,6 @@
+[submodule "Kafka-In-Action-Source-Code"]
+	path = Kafka-In-Action-Source-Code
+	url = https://github.com/Kafka-In-Action-Book/Kafka-In-Action-Source-Code
+[submodule "spring-security-jpa"]
+	path = spring-security-jpa
+	url = https://github.com/koushikkothagal/spring-security-jpa

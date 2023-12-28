@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+//Using Context to store global state
 const SecuredRoute = ({ component: Component, security, ...otherProps }) => (
   <Route
     {...otherProps}
