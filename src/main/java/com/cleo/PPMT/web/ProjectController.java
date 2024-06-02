@@ -18,14 +18,17 @@ import java.security.Principal;
 @CrossOrigin
 public class ProjectController {
 
-    @Autowired
-    private ProjectService projectService;
+
+    private final ProjectService projectService;
+
+
+    private final MapValidationErrorService mapValidationErrorService;
 
     @Autowired
-    private MapValidationErrorService mapValidationErrorService;
-
-
-
+    public ProjectController(ProjectService projectService, MapValidationErrorService mapValidationErrorService) {
+        this.projectService = projectService;
+        this.mapValidationErrorService = mapValidationErrorService;
+    }
 
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result, Principal principal){
@@ -48,7 +51,8 @@ public class ProjectController {
 
 
     @GetMapping("/all")
-    public Iterable<Project> getAllProjects(Principal principal){return projectService.findAllProjects(principal.getName());}
+    public Iterable<Project> getAllProjects(Principal principal){
+        return projectService.findAllProjects(principal.getName());}
 
 
     @DeleteMapping("/{projectId}")
