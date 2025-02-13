@@ -1,0 +1,1 @@
+# Redo the whole project for Spring Boot 3 and latest React version
