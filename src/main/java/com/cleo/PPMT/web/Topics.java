@@ -12,9 +12,9 @@ public class Topics {
    @Autowired
 	private KafkaTemplate<Object, Object> template;
 
-	@PostMapping(path = "/send/foo/{what}")
+	/*@PostMapping(path = "/send/foo/{what}")
 	public void sendFoo(@PathVariable String what) {
 		this.template.send("topic1", new Foo1(what));
 	}
-
+*/
 }
